@@ -4,10 +4,6 @@ import {
   constructApiPromise,
 } from "@substrate/asset-transfer-api";
 
-export const DestinationChainIds = {
-  RelayChain: "0",
-};
-
 export async function createAssetTransferApi(
   wsUrl: string,
   opts?: ApiOptions | undefined
@@ -26,13 +22,10 @@ export default class AssetTransferApiService {
     this.assetsApi = assetTransferApi;
   }
 
-  createTransferTransaction(
-    destChainId: keyof typeof DestinationChainIds,
-    destAddress: string
-  ) {
+  createTransferTransaction(destChainId: string, destAddress: string) {
     if (!this.assetsApi) throw new Error("No asset api initialized");
     const call = this.assetsApi.createTransferTransaction(
-      DestinationChainIds[destChainId], // destChainId (If the destination is a relay chain put `0`)
+      destChainId, // destChainId (If the destination is a relay chain put `0`)
       destAddress,
       ["1", "2"], // Array of AssetIds
       ["1000000000", "2000000000"], // Array of amounts of each token to transfer
