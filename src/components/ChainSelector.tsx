@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { EndpointOption } from "@polkadot/apps-config/endpoints/types";
 import { Select, Space } from "antd";
 import { MIDDLE_STYLE } from "../constants/style";
 import ChainInfoCard from "./ChainInfoCard";
+import { useAssetTransferStore } from "../stores/useAssetTransferStore";
 
 type Props = {
   chainOptions: EndpointOption[];
 };
 
 const ChainSelector = ({ chainOptions }: Props) => {
-  const [selectedPara, setSelectedPara] = useState<EndpointOption | undefined>(
-    undefined
-  );
+  const { selectedEndpointOption, setSelectedEndpointOption } =
+    useAssetTransferStore();
   const defaultParaValue = chainOptions[0].paraId;
 
   useEffect(() => {
-    setSelectedPara(
+    setSelectedEndpointOption(
       chainOptions.find((para) => para.paraId === defaultParaValue)
     );
   }, [defaultParaValue, chainOptions]);
@@ -26,9 +26,11 @@ const ChainSelector = ({ chainOptions }: Props) => {
         <Select
           style={{ width: "100%" }}
           onChange={(value) =>
-            setSelectedPara(chainOptions.find((para) => para.paraId === value))
+            setSelectedEndpointOption(
+              chainOptions.find((para) => para.paraId === value)
+            )
           }
-          value={selectedPara?.paraId || defaultParaValue}
+          value={selectedEndpointOption?.paraId || defaultParaValue}
           options={chainOptions.map((chain) => ({
             key: chain.paraId,
             label: (
@@ -58,8 +60,8 @@ const ChainSelector = ({ chainOptions }: Props) => {
           }))}
         />
       )}
-      {selectedPara ? (
-        <ChainInfoCard endpoint={selectedPara} />
+      {selectedEndpointOption ? (
+        <ChainInfoCard endpoint={selectedEndpointOption} />
       ) : (
         <div>No chain selected</div>
       )}
