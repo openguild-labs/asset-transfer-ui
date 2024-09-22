@@ -1,8 +1,8 @@
 import { EndpointOption } from "@polkadot/apps-config/endpoints/types";
 import { create } from "zustand";
 
-type RelayChainSet = "polkadot" | "kusama" | "rococo" | "westend";
-type ChainTypeSet = "common" | "para" | "relay";
+export type RelayChainSet = "polkadot" | "kusama" | "rococo" | "westend";
+export type ChainTypeSet = "common" | "para" | "relay";
 
 interface Props {
   selectedRelayChain: RelayChainSet;

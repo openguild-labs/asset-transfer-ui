@@ -12,13 +12,15 @@ type Props = {
 const ChainSelector = ({ chainOptions }: Props) => {
   const { selectedEndpointOption, setSelectedEndpointOption } =
     useAssetTransferStore();
-  const defaultParaValue = chainOptions[0].paraId;
+  const defaultParaValue = chainOptions[0]?.paraId;
 
   useEffect(() => {
-    setSelectedEndpointOption(
-      chainOptions.find((para) => para.paraId === defaultParaValue)
-    );
-  }, [defaultParaValue, chainOptions]);
+    if (chainOptions.length > 0) {
+      setSelectedEndpointOption(
+        chainOptions.find((para) => para.paraId === defaultParaValue)
+      );
+    }
+  }, [chainOptions]);
 
   return (
     <div>

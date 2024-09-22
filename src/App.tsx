@@ -1,24 +1,10 @@
 import "./App.css";
 import React, { useMemo, useState } from "react";
-import {
-  prodParasPolkadot,
-  prodParasPolkadotCommon,
-  prodRelayPolkadot,
-  prodParasKusama,
-  prodParasKusamaCommon,
-  prodRelayKusama,
-  testParasRococo,
-  testParasRococoCommon,
-  testRelayRococo,
-  testParasWestend,
-  testParasWestendCommon,
-  testRelayWestend,
-} from "@polkadot/apps-config";
 import { Button, Card, ConfigProvider, Select, Space, Tag } from "antd";
 import { MIDDLE_STYLE } from "./constants/style";
-import ChainSelector from "./components/ChainSelector";
 import { useAssetTransferStore } from "./stores/useAssetTransferStore";
 import AssetRegistry from "@substrate/asset-transfer-api-registry";
+import { RelaychainSelector } from "./components";
 
 function App() {
   const {
@@ -144,58 +130,10 @@ function App() {
                 },
               ]}
             />
-            {selectedRelayChain === "polkadot" && (
-              <React.Fragment>
-                {selectedChainType === "para" && (
-                  <ChainSelector chainOptions={prodParasPolkadot} />
-                )}
-                {selectedChainType === "common" && (
-                  <ChainSelector chainOptions={prodParasPolkadotCommon} />
-                )}
-                {selectedChainType === "relay" && (
-                  <ChainSelector chainOptions={[prodRelayPolkadot]} />
-                )}
-              </React.Fragment>
-            )}
-            {selectedRelayChain === "kusama" && (
-              <React.Fragment>
-                {selectedChainType === "para" && (
-                  <ChainSelector chainOptions={prodParasKusama} />
-                )}
-                {selectedChainType === "common" && (
-                  <ChainSelector chainOptions={prodParasKusamaCommon} />
-                )}
-                {selectedChainType === "relay" && (
-                  <ChainSelector chainOptions={[prodRelayKusama]} />
-                )}
-              </React.Fragment>
-            )}
-            {selectedRelayChain === "rococo" && (
-              <React.Fragment>
-                {selectedChainType === "para" && (
-                  <ChainSelector chainOptions={testParasRococo} />
-                )}
-                {selectedChainType === "common" && (
-                  <ChainSelector chainOptions={testParasRococoCommon} />
-                )}
-                {selectedChainType === "relay" && (
-                  <ChainSelector chainOptions={[testRelayRococo]} />
-                )}
-              </React.Fragment>
-            )}
-            {selectedRelayChain === "westend" && (
-              <React.Fragment>
-                {selectedChainType === "para" && (
-                  <ChainSelector chainOptions={testParasWestend} />
-                )}
-                {selectedChainType === "common" && (
-                  <ChainSelector chainOptions={testParasWestendCommon} />
-                )}
-                {selectedChainType === "relay" && (
-                  <ChainSelector chainOptions={[testRelayWestend]} />
-                )}
-              </React.Fragment>
-            )}
+            <RelaychainSelector
+              selectedRelayChain={selectedRelayChain}
+              selectedChainType={selectedChainType}
+            />
           </Space>
         </Card>
         <Card
